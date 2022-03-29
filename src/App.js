@@ -2,6 +2,7 @@
 import './App.css';
 import { useState, useEffect} from 'react'
 import axios from 'axios';
+import Movie from './components/Movie';
 
 function App() {
   const [movieInfo, setMovieInfo] = useState({})
@@ -31,12 +32,12 @@ function App() {
   }
   return (
     <div className="App">
-    <main>
+    {/* <main>
       <img src={movieInfo.Poster} alt={movieInfo.Title}/>
       <h3>Title: {movieInfo.Title}</h3>
       <p>Release date: {movieInfo.Released}</p>
-    </main>
-
+    </main> */}
+    <Movie movieInfo = {movieInfo}/>
     <form onSubmit={handleSubmit} >
       <label htmlFor='movieIfno'>Title: </label>
       <input id='movieInfo'  value= {input} onChange={(e)=>{setInput(e.target.value)}}/>
