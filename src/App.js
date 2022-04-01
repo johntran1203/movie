@@ -5,43 +5,40 @@ import axios from 'axios';
 import Movie from './components/Movie';
 
 function App() {
-  const [movieInfo, setMovieInfo] = useState({})
   const [search, setSearch] = useState('shrek')
+  const [infoMovie, setInfoMovie] = useState({})
   const [input, setInput] = useState('')
-
-  useEffect(() => {
-    // OMDb API: http://www.omdbapi.com/?i=tt3896198&apikey=61a95ef8
  
+    // OMDb API: http://www.omdbapi.com/?i=tt3896198&apikey=61a95ef8
+    // 
+  
+    useEffect(()=> {
 
-    async function fetchMovieData () {
-      const movieUrl = `http://www.omdbapi.com/?t=${search}&apikey=61a95ef8`
-      const response = await axios.get(movieUrl)
-      setMovieInfo(response.data)
-    
+      async function movieDetail() {
+        const resp = await axios.get(`http://www.omdbapi.com/?t=${search}&apikey=61a95ef8`)
+        const nameOfMovie = resp.data
+       setInfoMovie(nameOfMovie)
+
+       
+      }
+      movieDetail()
+    },[search])
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      setSearch(input)
+      setInput('')
     }
-    
-    fetchMovieData()
 
-  }, [search])
-
-  function handleSubmit(e) {
-    e.preventDefault()
-    setSearch(input)
-    // console.log('hi')
-    setInput('')
-  }
   return (
-    <div className="App">
-    {/* <main>
-      <img src={movieInfo.Poster} alt={movieInfo.Title}/>
-      <h3>Title: {movieInfo.Title}</h3>
-      <p>Release date: {movieInfo.Released}</p>
-    </main> */}
-    <Movie movieInfo = {movieInfo}/>
-    <form onSubmit={handleSubmit} >
-      <label htmlFor='movieIfno'>Title: </label>
-      <input id='movieInfo'  value= {input} onChange={(e)=>{setInput(e.target.value)}}/>
-    </form>
+    <div>
+      {/* <h2>Movie: {infoMovie.Title}</h2>
+      <img src={infoMovie.Poster} alt={infoMovie.Title} />
+      <h3>Release Year: {infoMovie.Year}</h3> */}
+      <Movie movieInfo={infoMovie}/>
+      <form onSubmit={handleSubmit}>
+          <input value= {input} onChange={(e)=>{setInput(e.target.value)}}/>
+      </form>
     </div>
   );
 }
